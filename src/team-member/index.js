@@ -1,5 +1,6 @@
 import { registerBlockType } from '@wordpress/blocks';
 import Edit from './edit';
+import Save from './save';
 
 registerBlockType( 'blocks-course/team-member', {
 	title: 'Team Member',
@@ -23,5 +24,5 @@ registerBlockType( 'blocks-course/team-member', {
 		},
 	},
 	edit: Edit,
-	save: () => null,
+	save: Save,
 } );
