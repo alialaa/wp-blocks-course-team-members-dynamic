@@ -21,10 +21,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			} ) }
 		>
 			<InspectorControls>
-				<PanelBody
-				// title={ __( 'Team Members Options', 'team-members' ) }
-				// icon="admin-comments"
-				>
+				<PanelBody>
 					<RangeControl
 						label={ __( 'Columns', 'team-members' ) }
 						value={ columns }
