@@ -1,24 +1,46 @@
-import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InnerBlocks,
+	InspectorControls,
+} from '@wordpress/block-editor';
+import { PanelBody, RangeControl } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
+
 import './editor.scss';
 
-export default function Edit() {
+export default function Edit( { attributes, setAttributes } ) {
+	const { columns } = attributes;
+
+	const onChangeColumns = ( value ) => {
+		setAttributes( { columns: value } );
+	};
 	return (
-		<div { ...useBlockProps() }>
+		<div
+			{ ...useBlockProps( {
+				className: `has-${ columns }-columns`,
+			} ) }
+		>
+			<InspectorControls>
+				<PanelBody
+				// title={ __( 'Team Members Options', 'team-members' ) }
+				// icon="admin-comments"
+				>
+					<RangeControl
+						label={ __( 'Columns', 'team-members' ) }
+						value={ columns }
+						onChange={ onChangeColumns }
+						min={ 1 }
+						max={ 6 }
+					/>
+				</PanelBody>
+			</InspectorControls>
 			<InnerBlocks
 				allowedBlocks={ [ 'blocks-course/team-member' ] }
-				// template={ [
-				// 	[
-				// 		'blocks-course/team-member',
-				// 		{ name: 'Name 1', bio: 'Bio 1' },
-				// 	],
-				// 	[ 'blocks-course/team-member' ],
-				// ] }
 				template={ [
 					[ 'blocks-course/team-member' ],
 					[ 'blocks-course/team-member' ],
 					[ 'blocks-course/team-member' ],
 				] }
-				// templateLock="insert"
 			/>
 		</div>
 	);
