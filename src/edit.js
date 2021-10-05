@@ -32,6 +32,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 			</InspectorControls>
 			<InnerBlocks
+				orientation="horizontal"
 				allowedBlocks={ [ 'blocks-course/team-member' ] }
 				template={ [
 					[ 'blocks-course/team-member' ],
