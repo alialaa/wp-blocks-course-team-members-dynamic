@@ -1,4 +1,8 @@
-import { useBlockProps, RichText } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	RichText,
+	MediaPlaceholder,
+} from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
 export default function Edit( { attributes, setAttributes } ) {
@@ -11,6 +15,14 @@ export default function Edit( { attributes, setAttributes } ) {
 	};
 	return (
 		<div { ...useBlockProps() }>
+			<MediaPlaceholder
+				icon="admin-users"
+				onSelect={ ( val ) => console.log( val ) }
+				onSelectURL={ ( val ) => console.log( val ) }
+				onError={ ( val ) => console.log( val ) }
+				accept="image/*"
+				allowedTypes={ [ 'image' ] }
+			/>
 			<RichText
 				onChange={ onChangeName }
 				value={ name }
