@@ -1,14 +1,16 @@
+import { useEffect, useState } from '@wordpress/element';
 import {
 	useBlockProps,
 	RichText,
 	MediaPlaceholder,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { isBlobURL } from '@wordpress/blob';
+import { isBlobURL, revokeBlobURL } from '@wordpress/blob';
 import { Spinner, withNotices } from '@wordpress/components';
 
 function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
-	const { name, bio, url, alt } = attributes;
+	const [ blobURL, setBlobURL ] = useState();
+	const { name, bio, url, alt, id } = attributes;
 	const onChangeName = ( value ) => {
 		setAttributes( { name: value } );
 	};
@@ -20,6 +22,7 @@ function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
 			setAttributes( { url: undefined, id: undefined, alt: '' } );
 			return;
 		}
+
 		setAttributes( { url: image.url, id: image.id, alt: image.alt } );
 	};
 
@@ -35,6 +38,25 @@ function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
 		noticeOperations.removeAllNotices();
 		noticeOperations.createErrorNotice( message );
 	};
+
+	useEffect( () => {
+		if ( ! id && isBlobURL( url ) ) {
+			setAttributes( {
+				url: undefined,
+				alt: '',
+			} );
+		}
+	}, [] );
+
+	useEffect( () => {
+		if ( isBlobURL( url ) ) {
+			setBlobURL( url );
+		} else {
+			revokeBlobURL( blobURL );
+			setBlobURL();
+		}
+	}, [ url ] );
+
 	return (
 		<div { ...useBlockProps() }>
 			{ url && (
