@@ -199,8 +199,8 @@ function Edit({
     onSelect: onSelectImage,
     onSelectURL: onSelectURL,
     onError: onUploadError,
-    notices: noticeUI // accept="image/*"
-    ,
+    notices: noticeUI,
+    accept: "image/*",
     allowedTypes: ['image'],
     disableMediaButtons: url
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
