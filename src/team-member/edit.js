@@ -8,7 +8,13 @@ import {
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import { isBlobURL, revokeBlobURL } from '@wordpress/blob';
-import { Spinner, withNotices, Icon, Tooltip } from '@wordpress/components';
+import {
+	Spinner,
+	withNotices,
+	Icon,
+	Tooltip,
+	ToolbarButton,
+} from '@wordpress/components';
 
 function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
 	const [ blobURL, setBlobURL ] = useState();
@@ -31,6 +37,14 @@ function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
 	const onSelectURL = ( newURL ) => {
 		setAttributes( {
 			url: newURL,
+			id: undefined,
+			alt: '',
+		} );
+	};
+
+	const removeImage = () => {
+		setAttributes( {
+			url: undefined,
 			id: undefined,
 			alt: '',
 		} );
@@ -61,27 +75,39 @@ function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
 
 	return (
 		<>
-			<BlockControls group="inline">
-				<MediaReplaceFlow
-					name={
-						<Tooltip text={ __( 'Replace Image', 'team-members' ) }>
-							<div>
-								<Icon icon="format-image" />
-								<span className="screen-reader-text">
-									{ __( 'Replace Image', 'team-members' ) }
-								</span>
-							</div>
-						</Tooltip>
-					}
-					mediaId={ id }
-					mediaURL={ url }
-					allowedTypes={ [ 'image' ] }
-					accept="image/*"
-					onSelect={ onSelectImage }
-					onSelectURL={ onSelectURL }
-					onError={ onUploadError }
-				/>
-			</BlockControls>
+			{ url && (
+				<BlockControls group="inline">
+					<MediaReplaceFlow
+						name={
+							<Tooltip
+								text={ __( 'Replace Image', 'team-members' ) }
+							>
+								<div>
+									<Icon icon="format-image" />
+									<span className="screen-reader-text">
+										{ __(
+											'Replace Image',
+											'team-members'
+										) }
+									</span>
+								</div>
+							</Tooltip>
+						}
+						mediaId={ id }
+						mediaURL={ url }
+						allowedTypes={ [ 'image' ] }
+						accept="image/*"
+						onSelect={ onSelectImage }
+						onSelectURL={ onSelectURL }
+						onError={ onUploadError }
+					/>
+					<ToolbarButton
+						title={ __( 'Remove Image', 'team-members' ) }
+						icon="trash"
+						onClick={ removeImage }
+					/>
+				</BlockControls>
+			) }
 
 			<div { ...useBlockProps() }>
 				{ url && (
