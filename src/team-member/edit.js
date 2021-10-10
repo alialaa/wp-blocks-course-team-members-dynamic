@@ -1,4 +1,4 @@
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useState, useRef } from '@wordpress/element';
 import {
 	useBlockProps,
 	RichText,
@@ -10,7 +10,7 @@ import {
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
-// import { store as coreStore } from '@wordpress/core-data';
+import { usePrevious } from '@wordpress/compose';
 import { isBlobURL, revokeBlobURL } from '@wordpress/blob';
 import {
 	Spinner,
@@ -26,7 +26,11 @@ import {
 function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
 	const [ blobURL, setBlobURL ] = useState();
 
+	const titleRef = useRef();
+
 	const { name, bio, url, alt, id } = attributes;
+
+	const prevURL = usePrevious( url );
 
 	const imageObject = useSelect(
 		( select ) => {
@@ -121,6 +125,12 @@ function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
 		}
 	}, [ url ] );
 
+	useEffect( () => {
+		if ( url && ! prevURL ) {
+			titleRef.current.focus();
+		}
+	}, [ url, prevURL ] );
+
 	return (
 		<>
 			<InspectorControls>
@@ -133,17 +143,7 @@ function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
 							options={ getImageSizeOptions() }
 						/>
 					) }
-					{ /* { id && (
-						<SelectControl
-							label={ __( 'Image Size', 'team-members' ) }
-							value=""
-							onChange={ ( value ) => console.log( value ) }
-							options={ [
-								{ label: 'Label 1', value: 'value1' },
-								{ label: 'Label 2', value: 'value2' },
-							] }
-						/>
-					) } */ }
+
 					{ url && ! isBlobURL( url ) && (
 						<TextareaControl
 							label={ __(
@@ -216,6 +216,7 @@ function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
 					disableMediaButtons={ url }
 				/>
 				<RichText
+					ref={ titleRef }
 					onChange={ onChangeName }
 					value={ name }
 					placeholder={ __( 'Member Name', 'team-members' ) }
