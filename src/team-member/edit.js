@@ -5,6 +5,7 @@ import {
 	MediaPlaceholder,
 	BlockControls,
 	MediaReplaceFlow,
+	InspectorControls,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import { isBlobURL, revokeBlobURL } from '@wordpress/blob';
@@ -14,6 +15,8 @@ import {
 	Icon,
 	Tooltip,
 	ToolbarButton,
+	PanelBody,
+	TextareaControl,
 } from '@wordpress/components';
 
 function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
@@ -24,6 +27,9 @@ function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
 	};
 	const onChangeBio = ( value ) => {
 		setAttributes( { bio: value } );
+	};
+	const onChangeAltText = ( value ) => {
+		setAttributes( { alt: value } );
 	};
 	const onSelectImage = ( image ) => {
 		if ( ! image || ! image.url ) {
@@ -75,6 +81,22 @@ function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
 
 	return (
 		<>
+			<InspectorControls>
+				<PanelBody title={ __( 'Image Settings', 'team-members' ) }>
+					<TextareaControl
+						label={ __(
+							'Alt Text (Alternative Text)',
+							'team-members'
+						) }
+						value={ alt }
+						onChange={ onChangeAltText }
+						help={ __(
+							"Alternative text describes your image to people can't see it. Add a short description with its key details.",
+							'team-members'
+						) }
+					/>
+				</PanelBody>
+			</InspectorControls>
 			{ url && (
 				<BlockControls group="inline">
 					<MediaReplaceFlow
