@@ -31,12 +31,14 @@ function Edit( {
 	isSelected,
 } ) {
 	const [ blobURL, setBlobURL ] = useState();
+	const [ selectedLink, setSelectedLink ] = useState();
 
 	const titleRef = useRef();
 
 	const { name, bio, url, alt, id, socialLinks } = attributes;
 
 	const prevURL = usePrevious( url );
+	const prevIsSelected = usePrevious( isSelected );
 
 	const imageObject = useSelect(
 		( select ) => {
@@ -113,6 +115,13 @@ function Edit( {
 		noticeOperations.createErrorNotice( message );
 	};
 
+	const addNewSocialLink = () => {
+		setAttributes( {
+			socialLinks: [ ...socialLinks, { icon: 'wordpress', link: '' } ],
+		} );
+		setSelectedLink( socialLinks.length );
+	};
+
 	useEffect( () => {
 		if ( ! id && isBlobURL( url ) ) {
 			setAttributes( {
@@ -136,6 +145,12 @@ function Edit( {
 			titleRef.current.focus();
 		}
 	}, [ url, prevURL ] );
+
+	useEffect( () => {
+		if ( prevIsSelected && ! isSelected ) {
+			setSelectedLink( undefined );
+		}
+	}, [ isSelected, prevIsSelected ] );
 
 	return (
 		<>
@@ -240,8 +255,25 @@ function Edit( {
 					<ul>
 						{ socialLinks.map( ( item, index ) => {
 							return (
-								<li key={ index }>
-									<Icon icon={ item.icon } size={ 16 } />
+								<li
+									key={ index }
+									className={
+										selectedLink === index
+											? 'is-selected'
+											: null
+									}
+								>
+									<button
+										aria-label={ __(
+											'Edit Link',
+											'team-members'
+										) }
+										onClick={ () =>
+											setSelectedLink( index )
+										}
+									>
+										<Icon icon={ item.icon } size={ 16 } />
+									</button>
 								</li>
 							);
 						} ) }
@@ -262,6 +294,7 @@ function Edit( {
 											'Add Social Link',
 											'team-members'
 										) }
+										onClick={ addNewSocialLink }
 									>
 										<Icon icon="plus" size={ 14 } />
 									</button>
