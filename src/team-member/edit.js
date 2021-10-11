@@ -21,7 +21,6 @@ import {
 	PanelBody,
 	TextareaControl,
 	SelectControl,
-	Dashicon,
 } from '@wordpress/components';
 
 function Edit( {
@@ -242,7 +241,7 @@ function Edit( {
 						{ socialLinks.map( ( item, index ) => {
 							return (
 								<li key={ index }>
-									<Dashicon icon={ item.icon } size={ 16 } />
+									<Icon icon={ item.icon } size={ 16 } />
 								</li>
 							);
 						} ) }
@@ -264,7 +263,7 @@ function Edit( {
 											'team-members'
 										) }
 									>
-										<Dashicon icon="plus" size={ 14 } />
+										<Icon icon="plus" size={ 14 } />
 									</button>
 								</Tooltip>
 							</li>
