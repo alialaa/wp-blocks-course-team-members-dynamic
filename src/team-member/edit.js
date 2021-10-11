@@ -21,14 +21,21 @@ import {
 	PanelBody,
 	TextareaControl,
 	SelectControl,
+	Dashicon,
 } from '@wordpress/components';
 
-function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
+function Edit( {
+	attributes,
+	setAttributes,
+	noticeUI,
+	noticeOperations,
+	isSelected,
+} ) {
 	const [ blobURL, setBlobURL ] = useState();
 
 	const titleRef = useRef();
 
-	const { name, bio, url, alt, id } = attributes;
+	const { name, bio, url, alt, id, socialLinks } = attributes;
 
 	const prevURL = usePrevious( url );
 
@@ -230,6 +237,40 @@ function Edit( { attributes, setAttributes, noticeUI, noticeOperations } ) {
 					tagName="p"
 					allowedFormats={ [] }
 				/>
+				<div className="wp-block-blocks-course-team-member-social-links">
+					<ul>
+						{ socialLinks.map( ( item, index ) => {
+							return (
+								<li key={ index }>
+									<Dashicon icon={ item.icon } size={ 16 } />
+								</li>
+							);
+						} ) }
+						{ isSelected && (
+							<li
+								className={
+									'wp-block-blocks-course-team-member-add-icon-li'
+								}
+							>
+								<Tooltip
+									text={ __(
+										'Add Social Link',
+										'team-members'
+									) }
+								>
+									<button
+										aria-label={ __(
+											'Add Social Link',
+											'team-members'
+										) }
+									>
+										<Dashicon icon="plus" size={ 14 } />
+									</button>
+								</Tooltip>
+							</li>
+						) }
+					</ul>
+				</div>
 			</div>
 		</>
 	);
