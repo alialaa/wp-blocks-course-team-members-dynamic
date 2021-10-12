@@ -157,6 +157,12 @@
 .wp-block-blocks-course-team-members > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="blocks-course/team-member"] .wp-block-blocks-course-team-member-social-links ul li.wp-block-blocks-course-team-member-add-icon-li button {
   outline: 1px dashed;
 }
+.wp-block-blocks-course-team-members > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="blocks-course/team-member"] .wp-block-blocks-course-team-member-link-form {
+  border: 1px solid;
+  background: #fff;
+  padding: 10px;
+  margin-top: 10px;
+}
 .wp-block-blocks-course-team-members > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="blocks-course/team-member"] h4 {
   color: #222;
   font-size: 22px;
