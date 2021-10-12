@@ -271,6 +271,13 @@ function Edit({
     });
   };
 
+  const removeSocialItem = () => {
+    setAttributes({
+      socialLinks: [...socialLinks.slice(0, selectedLink), ...socialLinks.slice(selectedLink + 1)]
+    });
+    setSelectedLink(undefined);
+  };
+
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (!id && (0,_wordpress_blob__WEBPACK_IMPORTED_MODULE_5__.isBlobURL)(url)) {
       setAttributes({
@@ -391,7 +398,8 @@ function Edit({
     value: socialLinks[selectedLink].link,
     onChange: link => updateSocialItem('link', link)
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Button, {
-    isDestructive: true
+    isDestructive: true,
+    onClick: removeSocialItem
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Remove Link', 'team-members')))));
 }
 
