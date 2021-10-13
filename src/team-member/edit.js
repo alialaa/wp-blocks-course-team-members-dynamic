@@ -26,7 +26,8 @@ import {
 } from '@wordpress/components';
 import {
 	SortableContext,
-	verticalListSortingStrategy,
+	horizontalListSortingStrategy,
+	arrayMove,
 } from '@dnd-kit/sortable';
 import {
 	DndContext,
@@ -34,6 +35,7 @@ import {
 	useSensors,
 	PointerSensor,
 } from '@dnd-kit/core';
+import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
 import { SortableItem } from './sortable-item';
 
 function Edit( {
@@ -46,7 +48,11 @@ function Edit( {
 	const [ blobURL, setBlobURL ] = useState();
 	const [ selectedLink, setSelectedLink ] = useState();
 
-	const sensors = useSensors( useSensor( PointerSensor ) );
+	const sensors = useSensors(
+		useSensor( PointerSensor, {
+			activationConstraint: { distance: 5 },
+		} )
+	);
 
 	const titleRef = useRef();
 
@@ -154,7 +160,19 @@ function Edit( {
 	};
 
 	const handleDragEnd = ( event ) => {
-		console.log( event );
+		const { active, over } = event;
+		if ( active.id !== over.id ) {
+			const oldIndex = socialLinks.findIndex(
+				( i ) => i.icon === active.id
+			);
+			const newIndex = socialLinks.findIndex(
+				( i ) => i.icon === over.id
+			);
+			setAttributes( {
+				socialLinks: arrayMove( socialLinks, oldIndex, newIndex ),
+			} );
+			setSelectedLink( newIndex );
+		}
 	};
 
 	useEffect( () => {
@@ -291,45 +309,27 @@ function Edit( {
 						<DndContext
 							sensors={ sensors }
 							onDragEnd={ handleDragEnd }
+							modifiers={ [ restrictToHorizontalAxis ] }
 						>
 							<SortableContext
 								items={ socialLinks.map(
-									( item, index ) => `${ index }`
+									( item ) => `${ item.icon }`
 								) }
-								strategy={ verticalListSortingStrategy }
+								strategy={ horizontalListSortingStrategy }
 							>
 								{ socialLinks.map( ( item, index ) => (
 									<SortableItem
-										key={ index }
-										id={ `${ index }` }
+										key={ item.icon }
+										id={ `${ item.icon }` }
+										index={ index }
+										selectedLink={ selectedLink }
+										setSelectedLink={ setSelectedLink }
+										icon={ item.icon }
 									/>
 								) ) }
 							</SortableContext>
 						</DndContext>
-						{ socialLinks.map( ( item, index ) => {
-							return (
-								<li
-									key={ index }
-									className={
-										selectedLink === index
-											? 'is-selected'
-											: null
-									}
-								>
-									<button
-										aria-label={ __(
-											'Edit Link',
-											'team-members'
-										) }
-										onClick={ () =>
-											setSelectedLink( index )
-										}
-									>
-										<Icon icon={ item.icon } size={ 16 } />
-									</button>
-								</li>
-							);
-						} ) }
+
 						{ isSelected && (
 							<li
 								className={

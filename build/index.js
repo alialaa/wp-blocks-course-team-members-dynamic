@@ -2970,6 +2970,131 @@ const DragOverlay = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().me
 
 /***/ }),
 
+/***/ "./node_modules/@dnd-kit/modifiers/dist/modifiers.esm.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@dnd-kit/modifiers/dist/modifiers.esm.js ***!
+  \***************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createSnapModifier": function() { return /* binding */ createSnapModifier; },
+/* harmony export */   "restrictToFirstScrollableAncestor": function() { return /* binding */ restrictToFirstScrollableAncestor; },
+/* harmony export */   "restrictToHorizontalAxis": function() { return /* binding */ restrictToHorizontalAxis; },
+/* harmony export */   "restrictToParentElement": function() { return /* binding */ restrictToParentElement; },
+/* harmony export */   "restrictToVerticalAxis": function() { return /* binding */ restrictToVerticalAxis; },
+/* harmony export */   "restrictToWindowEdges": function() { return /* binding */ restrictToWindowEdges; },
+/* harmony export */   "snapCenterToCursor": function() { return /* binding */ snapCenterToCursor; }
+/* harmony export */ });
+/* harmony import */ var _dnd_kit_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @dnd-kit/utilities */ "./node_modules/@dnd-kit/utilities/dist/utilities.esm.js");
+
+
+function createSnapModifier(gridSize) {
+  return ({
+    transform
+  }) => ({ ...transform,
+    x: Math.ceil(transform.x / gridSize) * gridSize,
+    y: Math.ceil(transform.y / gridSize) * gridSize
+  });
+}
+
+const restrictToHorizontalAxis = ({
+  transform
+}) => {
+  return { ...transform,
+    y: 0
+  };
+};
+
+function restrictToBoundingRect(transform, rect, boundingRect) {
+  const value = { ...transform
+  };
+
+  if (rect.top + transform.y <= boundingRect.top) {
+    value.y = boundingRect.top - rect.top;
+  } else if (rect.bottom + transform.y >= boundingRect.top + boundingRect.height) {
+    value.y = boundingRect.top + boundingRect.height - rect.bottom;
+  }
+
+  if (rect.left + transform.x <= boundingRect.left) {
+    value.x = boundingRect.left - rect.left;
+  } else if (rect.right + transform.x >= boundingRect.left + boundingRect.width) {
+    value.x = boundingRect.left + boundingRect.width - rect.right;
+  }
+
+  return value;
+}
+
+const restrictToParentElement = ({
+  transform,
+  activeNodeRect,
+  containerNodeRect
+}) => {
+  if (!activeNodeRect || !containerNodeRect) {
+    return transform;
+  }
+
+  return restrictToBoundingRect(transform, activeNodeRect, containerNodeRect);
+};
+
+const restrictToFirstScrollableAncestor = ({
+  transform,
+  activeNodeRect,
+  scrollableAncestorRects
+}) => {
+  const firstScrollableAncestorRect = scrollableAncestorRects[0];
+
+  if (!activeNodeRect || !firstScrollableAncestorRect) {
+    return transform;
+  }
+
+  return restrictToBoundingRect(transform, activeNodeRect, firstScrollableAncestorRect);
+};
+
+const restrictToVerticalAxis = ({
+  transform
+}) => {
+  return { ...transform,
+    x: 0
+  };
+};
+
+const restrictToWindowEdges = ({
+  transform,
+  activeNodeRect,
+  windowRect
+}) => {
+  if (!activeNodeRect || !windowRect) {
+    return transform;
+  }
+
+  return restrictToBoundingRect(transform, activeNodeRect, windowRect);
+};
+
+const snapCenterToCursor = ({
+  activatorEvent,
+  activeNodeRect,
+  transform
+}) => {
+  if (activeNodeRect && activatorEvent && ((0,_dnd_kit_utilities__WEBPACK_IMPORTED_MODULE_0__.isTouchEvent)(activatorEvent) || (0,_dnd_kit_utilities__WEBPACK_IMPORTED_MODULE_0__.hasViewportRelativeCoordinates)(activatorEvent))) {
+    const activatorCoordinates = (0,_dnd_kit_utilities__WEBPACK_IMPORTED_MODULE_0__.getEventCoordinates)(activatorEvent);
+    const offsetX = activatorCoordinates.x - activeNodeRect.left;
+    const offsetY = activatorCoordinates.y - activeNodeRect.top;
+    return { ...transform,
+      x: transform.x + offsetX - activeNodeRect.width / 2,
+      y: transform.y + offsetY - activeNodeRect.height / 2
+    };
+  }
+
+  return transform;
+};
+
+
+//# sourceMappingURL=modifiers.esm.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@dnd-kit/sortable/dist/sortable.esm.js":
 /*!*************************************************************!*\
   !*** ./node_modules/@dnd-kit/sortable/dist/sortable.esm.js ***!
@@ -3984,7 +4109,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _dnd_kit_sortable__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @dnd-kit/sortable */ "./node_modules/@dnd-kit/sortable/dist/sortable.esm.js");
 /* harmony import */ var _dnd_kit_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @dnd-kit/core */ "./node_modules/@dnd-kit/core/dist/core.esm.js");
-/* harmony import */ var _sortable_item__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./sortable-item */ "./src/team-member/sortable-item.js");
+/* harmony import */ var _dnd_kit_modifiers__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @dnd-kit/modifiers */ "./node_modules/@dnd-kit/modifiers/dist/modifiers.esm.js");
+/* harmony import */ var _sortable_item__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./sortable-item */ "./src/team-member/sortable-item.js");
+
 
 
 
@@ -4006,7 +4133,11 @@ function Edit({
 }) {
   const [blobURL, setBlobURL] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
   const [selectedLink, setSelectedLink] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
-  const sensors = (0,_dnd_kit_core__WEBPACK_IMPORTED_MODULE_8__.useSensors)((0,_dnd_kit_core__WEBPACK_IMPORTED_MODULE_8__.useSensor)(_dnd_kit_core__WEBPACK_IMPORTED_MODULE_8__.PointerSensor));
+  const sensors = (0,_dnd_kit_core__WEBPACK_IMPORTED_MODULE_8__.useSensors)((0,_dnd_kit_core__WEBPACK_IMPORTED_MODULE_8__.useSensor)(_dnd_kit_core__WEBPACK_IMPORTED_MODULE_8__.PointerSensor, {
+    activationConstraint: {
+      distance: 5
+    }
+  }));
   const titleRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const {
     name,
@@ -4136,7 +4267,19 @@ function Edit({
   };
 
   const handleDragEnd = event => {
-    console.log(event);
+    const {
+      active,
+      over
+    } = event;
+
+    if (active.id !== over.id) {
+      const oldIndex = socialLinks.findIndex(i => i.icon === active.id);
+      const newIndex = socialLinks.findIndex(i => i.icon === over.id);
+      setAttributes({
+        socialLinks: (0,_dnd_kit_sortable__WEBPACK_IMPORTED_MODULE_7__.arrayMove)(socialLinks, oldIndex, newIndex)
+      });
+      setSelectedLink(newIndex);
+    }
   };
 
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
@@ -4229,25 +4372,19 @@ function Edit({
     className: "wp-block-blocks-course-team-member-social-links"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_dnd_kit_core__WEBPACK_IMPORTED_MODULE_8__.DndContext, {
     sensors: sensors,
-    onDragEnd: handleDragEnd
+    onDragEnd: handleDragEnd,
+    modifiers: [_dnd_kit_modifiers__WEBPACK_IMPORTED_MODULE_9__.restrictToHorizontalAxis]
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_dnd_kit_sortable__WEBPACK_IMPORTED_MODULE_7__.SortableContext, {
-    items: socialLinks.map((item, index) => `${index}`),
-    strategy: _dnd_kit_sortable__WEBPACK_IMPORTED_MODULE_7__.verticalListSortingStrategy
-  }, socialLinks.map((item, index) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_sortable_item__WEBPACK_IMPORTED_MODULE_9__.SortableItem, {
-    key: index,
-    id: `${index}`
-  })))), socialLinks.map((item, index) => {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
-      key: index,
-      className: selectedLink === index ? 'is-selected' : null
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-      "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Edit Link', 'team-members'),
-      onClick: () => setSelectedLink(index)
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Icon, {
-      icon: item.icon,
-      size: 16
-    })));
-  }), isSelected && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
+    items: socialLinks.map(item => `${item.icon}`),
+    strategy: _dnd_kit_sortable__WEBPACK_IMPORTED_MODULE_7__.horizontalListSortingStrategy
+  }, socialLinks.map((item, index) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_sortable_item__WEBPACK_IMPORTED_MODULE_10__.SortableItem, {
+    key: item.icon,
+    id: `${item.icon}`,
+    index: index,
+    selectedLink: selectedLink,
+    setSelectedLink: setSelectedLink,
+    icon: item.icon
+  })))), isSelected && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     className: 'wp-block-blocks-course-team-member-add-icon-li'
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Tooltip, {
     text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Add Social Link', 'team-members')
@@ -4428,6 +4565,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _dnd_kit_sortable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @dnd-kit/sortable */ "./node_modules/@dnd-kit/sortable/dist/sortable.esm.js");
 /* harmony import */ var _dnd_kit_utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @dnd-kit/utilities */ "./node_modules/@dnd-kit/utilities/dist/utilities.esm.js");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__);
+
+
 
 
 
@@ -4445,15 +4588,20 @@ function SortableItem(props) {
   const style = {
     /* stylelint-disable-next-line */
     transform: _dnd_kit_utilities__WEBPACK_IMPORTED_MODULE_3__.CSS.Transform.toString(transform),
-    transition,
-    background: '#f03',
-    height: '40px',
-    marginBottom: 20
+    transition
   };
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("div", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("li", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
     ref: setNodeRef,
     style: style
-  }, attributes, listeners));
+  }, attributes, listeners, {
+    className: props.selectedLink === props.index ? 'is-selected' : null
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("button", {
+    "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Edit Link', 'team-members'),
+    onClick: () => props.setSelectedLink(props.index)
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Icon, {
+    icon: props.icon,
+    size: 16
+  })));
 }
 
 /***/ }),
