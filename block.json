@@ -19,6 +19,9 @@
 			"default": 2
 		}
 	},
+	"providesContext": {
+		"blocks-course/team-members-columns": "columns"
+	},
 	"example": {
         "attributes": {
             "columns": 2

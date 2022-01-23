@@ -4167,6 +4167,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function Edit({
   attributes,
+  context,
   setAttributes,
   noticeUI,
   noticeOperations,
@@ -4396,7 +4397,7 @@ function Edit({
     accept: "image/*",
     allowedTypes: ['image'],
     disableMediaButtons: url
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+  }), context['blocks-course/team-members-columns'], (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
     ref: titleRef,
     onChange: onChangeName,
     value: name,
@@ -4478,6 +4479,7 @@ __webpack_require__.r(__webpack_exports__);
     html: false,
     reusable: false
   },
+  usesContext: ['blocks-course/team-members-columns'],
   attributes: {
     name: {
       type: 'string',

@@ -40,6 +40,7 @@ import { SortableItem } from './sortable-item';
 
 function Edit( {
 	attributes,
+	context,
 	setAttributes,
 	noticeUI,
 	noticeOperations,
@@ -53,7 +54,6 @@ function Edit( {
 			activationConstraint: { distance: 5 },
 		} )
 	);
-
 	const titleRef = useRef();
 
 	const { name, bio, url, alt, id, socialLinks } = attributes;
@@ -289,6 +289,7 @@ function Edit( {
 					allowedTypes={ [ 'image' ] }
 					disableMediaButtons={ url }
 				/>
+				{ context[ 'blocks-course/team-members-columns' ] }
 				<RichText
 					ref={ titleRef }
 					onChange={ onChangeName }
