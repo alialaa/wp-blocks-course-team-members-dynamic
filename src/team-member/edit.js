@@ -40,7 +40,6 @@ import { SortableItem } from './sortable-item';
 
 function Edit( {
 	attributes,
-	context,
 	setAttributes,
 	noticeUI,
 	noticeOperations,
@@ -289,7 +288,6 @@ function Edit( {
 					allowedTypes={ [ 'image' ] }
 					disableMediaButtons={ url }
 				/>
-				{ context[ 'blocks-course/team-members-columns' ] }
 				<RichText
 					ref={ titleRef }
 					onChange={ onChangeName }

@@ -1,0 +1,35 @@
+{
+	"apiVersion": 2,
+	"name": "blocks-course/team-member",
+	"title": "Team Member",
+	"description": "Team member item.",
+	"icon": "admin-users",
+	"parent": [ "blocks-course/team-members" ],
+	"category": "media",
+	"supports": {
+		"html": false,
+		"reusable": false
+	},
+	"textdomain": "team-members",
+	"attributes": {
+		"name": {
+			"type": "string"
+		},
+		"bio": {
+			"type": "string"
+		},
+		"id": {
+			"type": "number"
+		},
+		"alt": {
+			"type": "string"
+		},
+		"url": {
+			"type": "string"
+		},
+		"socialLinks": {
+			"type": "array",
+			"default": []
+		}
+	}
+}

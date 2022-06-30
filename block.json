@@ -7,7 +7,7 @@
 	"description": "Team members grid.",
 	"supports": {
 		"html": false,
-		"align": ["wide","full"]
+		"align": [ "wide", "full" ]
 	},
 	"textdomain": "team-members",
 	"editorScript": "file:./build/index.js",
@@ -19,13 +19,10 @@
 			"default": 2
 		}
 	},
-	"providesContext": {
-		"blocks-course/team-members-columns": "columns"
-	},
 	"example": {
-        "attributes": {
-            "columns": 2
-        },
+		"attributes": {
+			"columns": 2
+		},
 		"innerBlocks": [
 			{
 				"name": "blocks-course/team-member",
@@ -33,7 +30,11 @@
 					"name": "John Doe",
 					"bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam neque nibh, tincidunt ut facilisis vitae, ullamcorper sit amet lectus. Proin porta vulputate purus.",
 					"url": "https://picsum.photos/id/1012/300/200",
-					"socialLinks": [{"icon": "facebook"},{"icon": "twitter"},{"icon": "instagram"}]
+					"socialLinks": [
+						{ "icon": "facebook" },
+						{ "icon": "twitter" },
+						{ "icon": "instagram" }
+					]
 				}
 			},
 			{
@@ -42,9 +43,13 @@
 					"name": "Jane Doe",
 					"bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam neque nibh, tincidunt ut facilisis vitae, ullamcorper sit amet lectus. Proin porta vulputate purus.",
 					"url": "https://picsum.photos/id/1011/300/200",
-					"socialLinks": [{"icon": "facebook"},{"icon": "twitter"},{"icon": "instagram"}]
+					"socialLinks": [
+						{ "icon": "facebook" },
+						{ "icon": "twitter" },
+						{ "icon": "instagram" }
+					]
 				}
 			}
 		]
-    }
+	}
 }

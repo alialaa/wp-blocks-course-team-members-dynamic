@@ -4114,15 +4114,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 
 
-function save({
-  attributes
-}) {
-  const {
-    columns
-  } = attributes;
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
-    className: `has-${columns}-columns`
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null));
+function save() {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null);
 }
 
 /***/ }),
@@ -4167,7 +4160,6 @@ __webpack_require__.r(__webpack_exports__);
 
 function Edit({
   attributes,
-  context,
   setAttributes,
   noticeUI,
   noticeOperations,
@@ -4397,7 +4389,7 @@ function Edit({
     accept: "image/*",
     allowedTypes: ['image'],
     disableMediaButtons: url
-  }), context['blocks-course/team-members-columns'], (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
     ref: titleRef,
     onChange: onChangeName,
     value: name,
@@ -4471,60 +4463,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('blocks-course/team-member', {
-  title: 'Team Member',
-  description: 'Team member item.',
-  icon: 'admin-users',
-  parent: ['blocks-course/team-members'],
-  supports: {
-    html: false,
-    reusable: false
-  },
-  usesContext: ['blocks-course/team-members-columns'],
-  attributes: {
-    name: {
-      type: 'string',
-      source: 'html',
-      selector: 'h4'
-    },
-    bio: {
-      type: 'string',
-      source: 'html',
-      selector: 'p'
-    },
-    id: {
-      type: 'number'
-    },
-    alt: {
-      type: 'string',
-      source: 'attribute',
-      selector: 'img',
-      attribute: 'alt',
-      default: ''
-    },
-    url: {
-      type: 'string',
-      source: 'attribute',
-      selector: 'img',
-      attribute: 'src'
-    },
-    socialLinks: {
-      type: 'array',
-      default: [],
-      source: 'query',
-      selector: '.wp-block-blocks-course-team-member-social-links ul li',
-      query: {
-        icon: {
-          source: 'attribute',
-          attribute: 'data-icon'
-        },
-        link: {
-          source: 'attribute',
-          selector: 'a',
-          attribute: 'href'
-        }
-      }
-    }
-  },
   edit: _edit__WEBPACK_IMPORTED_MODULE_1__["default"],
   save: _save__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
@@ -4541,48 +4479,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": function() { return /* binding */ save; }
 /* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-function save({
-  attributes
-}) {
-  const {
-    name,
-    bio,
-    url,
-    alt,
-    id,
-    socialLinks
-  } = attributes;
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save(), url && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-    src: url,
-    alt: alt,
-    className: id ? `wp-image-${id}` : null
-  }), name && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
-    tagName: "h4",
-    value: name
-  }), bio && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
-    tagName: "p",
-    value: bio
-  }), socialLinks.length > 0 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wp-block-blocks-course-team-member-social-links"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, socialLinks.map((item, index) => {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
-      key: index,
-      "data-icon": item.icon
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-      href: item.link
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Icon, {
-      icon: item.icon
-    })));
-  }))));
+function save() {
+  return null;
 }
 
 /***/ }),
